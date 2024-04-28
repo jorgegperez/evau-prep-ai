@@ -9,7 +9,7 @@ export const Wrapper = styled.View`
 `;
 
 export const HeaderText = styled.Text`
-  font-size: ${theme.fontSizes.subheading};
+  font-size: ${theme.fontSizes.subheading}px;
   font-weight: ${theme.fontWeights.bold};
   margin-bottom: 10px;
 `;
