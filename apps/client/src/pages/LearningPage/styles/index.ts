@@ -16,6 +16,9 @@ export const CorrectExerciseButton = styled.TouchableOpacity`
   margin-right: 16px;
   margin-bottom: 48px;
   align-self: flex-end;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
 `;
 
 export const BlueText = styled.Text`

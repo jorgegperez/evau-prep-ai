@@ -2,7 +2,7 @@
 
 from typing import Optional
 from pydantic import BaseModel, Field
-from config.settings import db as database
+# from config.settings import db as database
 from resources.objectid import PydanticObjectId
 
 
@@ -49,4 +49,3 @@ class UserService():
         :param user: User
         """
         return self.collection.insert_one(user.to_bson())
-

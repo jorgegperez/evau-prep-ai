@@ -1,4 +1,3 @@
-import { StyleSheet } from "react-native";
 import { theme } from "../../styles";
 import styled from "styled-components/native";
 

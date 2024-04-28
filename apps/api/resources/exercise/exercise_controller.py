@@ -3,10 +3,10 @@
 from flask import Blueprint, jsonify
 from resources.exercise.exercise_service import exercise_service as ExerciseService
 
-exercise_bp = Blueprint('exercises', __name__)
+exercise_bp = Blueprint('exercise', __name__)
 
 
-@exercise_bp.route('/exercises/<string:exercise_id>', methods=['GET'])
+@exercise_bp.route('/exercise/<string:exercise_id>', methods=['GET'])
 def get_exercise(exercise_id: str):
     """
     Get exercise by id
@@ -17,7 +17,7 @@ def get_exercise(exercise_id: str):
     return jsonify(exercise)
 
 
-@exercise_bp.route('/exercises', methods=['POST'])
+@exercise_bp.route('/exercise', methods=['POST'])
 def create_exercise():
     """
     Create exercise

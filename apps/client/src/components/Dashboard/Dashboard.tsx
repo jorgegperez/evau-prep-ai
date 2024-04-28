@@ -1,17 +1,21 @@
-import { Text } from "react-native";
+import { Text, TouchableHighlight, ActivityIndicator } from "react-native";
 import { ContinueWrapper, HeaderText, Wrapper } from "./Dashboard.styles";
-import { Link } from "react-router-native";
-import { StyledLink } from "../StyledLink";
+import { useMutateExercise } from "store";
 
 export const Dashboard = () => {
+  const { createExercise, isPending } = useMutateExercise();
+
+  const handleCreateExercise = () => createExercise();
+
   return (
     <Wrapper>
       <HeaderText>Dashboard</HeaderText>
-      <StyledLink to="/learn">
+      <TouchableHighlight onPress={handleCreateExercise}>
         <ContinueWrapper>
           <Text>Continue</Text>
         </ContinueWrapper>
-      </StyledLink>
+      </TouchableHighlight>
+      {isPending && <ActivityIndicator size="large" color="#0000ff" />}
     </Wrapper>
   );
 };
