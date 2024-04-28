@@ -95,7 +95,7 @@ pagar impuestos, la necesidad de trabajar, y la carencia de privilegios. """)
             print(response)
             json_response = json.loads(response)
             return json_response
-    
+
         elif exerciseType == EExerciseType.WORD_COMPLETION:
             return "WORD_COMPLETION"
         # return self.collection.insert_one(exercise.to_bson())
