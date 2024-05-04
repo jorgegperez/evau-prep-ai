@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import {
+  BlueText,
+  CorrectExerciseButton,
   ExerciseStatement,
   HeaderText,
   SelectedWord,
@@ -20,7 +22,7 @@ type IWord = {
 
 export const WordOrderingExercise = () => {
   const [selectedWords, setSelectedWords] = useState<IWord[]>([]);
-  const { exercise, isPending } = useMutateExercise();
+  const { exercise, isPending, createExercise } = useMutateExercise();
 
   const solutionWords = useMemo(
     () => exercise?.solution.split(" "),
@@ -46,12 +48,21 @@ export const WordOrderingExercise = () => {
     [mappedWords]
   );
 
+  const isNextDisabled = useMemo(() => !selectedWords.length, [selectedWords]);
+
   const handleWordSelection = (word: IWord) => {
     setSelectedWords([...selectedWords, word]);
   };
 
   const handleWordDeletion = (word: IWord) => {
     setSelectedWords(selectedWords.filter((w) => w !== word));
+  };
+
+  const handleNextExercise = () => {
+    if (selectedWords.map((w) => w.word).join(" ") === exercise?.solution) {
+      setSelectedWords([]);
+      createExercise();
+    }
   };
 
   if (isPending)
@@ -62,40 +73,50 @@ export const WordOrderingExercise = () => {
     );
 
   return (
-    <Wrapper>
-      <HeaderText>Ordena las palabras:</HeaderText>
-      <ExerciseStatement>
-        <Text>{exercise?.statement}</Text>
-      </ExerciseStatement>
-      <WordsWrapper>
-        {selectedWords.map((word) => (
-          <TouchableHighlight
-            underlayColor={theme.colors.error + "80"}
-            onPress={() => handleWordDeletion(word)}
-            key={word.id}
-          >
-            <SelectedWord>
-              <Text>{word.word}</Text>
-            </SelectedWord>
-          </TouchableHighlight>
-        ))}
-      </WordsWrapper>
-      <Divider />
-      <WordsWrapper>
-        {randomizedWords
-          .filter((w) => !selectedWords.includes(w))
-          .map((word) => (
+    <>
+      <Wrapper>
+        <HeaderText>Ordena las palabras:</HeaderText>
+        <ExerciseStatement>
+          <Text>{exercise?.statement}</Text>
+        </ExerciseStatement>
+        <WordsWrapper>
+          {selectedWords.map((word) => (
             <TouchableHighlight
-              underlayColor={theme.colors.primary + "80"}
-              onPress={() => handleWordSelection(word)}
+              underlayColor={theme.colors.error + "80"}
+              onPress={() => handleWordDeletion(word)}
               key={word.id}
             >
-              <WordWrapper>
+              <SelectedWord>
                 <Text>{word.word}</Text>
-              </WordWrapper>
+              </SelectedWord>
             </TouchableHighlight>
           ))}
-      </WordsWrapper>
-    </Wrapper>
+        </WordsWrapper>
+        <Divider />
+        <WordsWrapper>
+          {randomizedWords
+            .filter((w) => !selectedWords.includes(w))
+            .map((word) => (
+              <TouchableHighlight
+                underlayColor={theme.colors.primary + "80"}
+                onPress={() => handleWordSelection(word)}
+                key={word.id}
+              >
+                <WordWrapper>
+                  <Text>{word.word}</Text>
+                </WordWrapper>
+              </TouchableHighlight>
+            ))}
+        </WordsWrapper>
+      </Wrapper>
+      <CorrectExerciseButton
+        disabled={isNextDisabled}
+        onPress={handleNextExercise}
+        activeOpacity={0.8}
+      >
+        <BlueText>Next</BlueText>
+        {isPending && <ActivityIndicator size="small" color="white" />}
+      </CorrectExerciseButton>
+    </>
   );
 };

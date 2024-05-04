@@ -25,12 +25,5 @@ export const useMutateExercise = () => {
     },
   });
 
-  const handleCheckExercise = (answer: string[]) => {
-    if (!exercise) return false;
-    const isCorrect = exercise.solution === answer.join(" ");
-    if (isCorrect) return true;
-    return false;
-  };
-
-  return { createExercise, isPending, exercise, setExercise, handleCheckExercise };
+  return { createExercise, isPending, exercise, setExercise };
 };
